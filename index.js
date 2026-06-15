@@ -15,7 +15,8 @@ const SUBSCRIBERS_FILE = path.join(__dirname, "subscribers.json");
 // 
 function getFirstName(ctx) {
     const full = ctx.from.first_name || "friend";
-    return full.split(" ")[0];
+    // Strip anything that isn't a plain name — brackets, symbols, numbers
+    return full.replace(/[^a-zA-Z]/g, " ").trim().split(" ")[0] || "friend";
 }
 
 // ─── Subscriber Helpers ───────────────────────────────────────────────────────

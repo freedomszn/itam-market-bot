@@ -89,8 +89,32 @@ function getMarketDayInfo(today = new Date()) {
         dayName: DAY_NAMES[nextMarketDay.getUTCDay()],
     };
 }
+function getUpcomingMarketDays(count = 10) {
+    const today = new Date();
+    const todayUTC = new Date(Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+    ));
 
-module.exports = { getMarketDayInfo, generateMarketDays, daysBetween };
+    const allDays = generateMarketDays(todayUTC, 60);
+
+    return allDays
+        .filter(d => daysBetween(todayUTC, d) >= 0)
+        .slice(0, count)
+        .map(d => ({
+            formatted: d.toLocaleDateString("en-NG", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                timeZone: "UTC",
+            }),
+            daysAway: daysBetween(todayUTC, d),
+        }));
+}
+
+module.exports = { getMarketDayInfo, getUpcomingMarketDays, generateMarketDays, daysBetween };
 
 // // TEMP TEST — remove later
 // const info = getMarketDayInfo(new Date("2026-06-15"));

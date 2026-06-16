@@ -89,6 +89,7 @@ function getMarketDayInfo(today = new Date()) {
         dayName: DAY_NAMES[nextMarketDay.getUTCDay()],
     };
 }
+
 function getUpcomingMarketDays(count = 10) {
     const today = new Date();
     const todayUTC = new Date(Date.UTC(
@@ -115,7 +116,3 @@ function getUpcomingMarketDays(count = 10) {
 }
 
 module.exports = { getMarketDayInfo, getUpcomingMarketDays, generateMarketDays, daysBetween };
-
-// // TEMP TEST — remove later
-// const info = getMarketDayInfo(new Date("2026-06-15"));
-// console.log(info);
